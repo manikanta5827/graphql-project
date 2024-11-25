@@ -12,6 +12,23 @@ connect();
 require('dotenv').config();
 app.use(morgan('dev'));
 app.use(cors());
+app.use(
+  cors({
+    origin: '*', // Change this to specific domains in production
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
+// Manually handle preflight requests for Vercel
+app.options('*', (req, res) => {
+  res.set({
+    'Access-Control-Allow-Origin': '*', // Change this for production
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  });
+  res.status(204).end();
+});
 
 // Serve GraphQL API
 app.use(
