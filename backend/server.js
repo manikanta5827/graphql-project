@@ -34,6 +34,10 @@ app.get('/graphiql', (req, res) => {
 // Handle favicon.ico requests gracefully
 app.get('/favicon.ico', (req, res) => res.status(204));
 
+app.get('/', (req, res) => {
+  res.status(200).send('Welcome to GraphQL');
+});
+
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log('Server running at http://localhost:' + port + '/graphql');
